@@ -1,0 +1,16 @@
+[
+{
+  "modid": "tardis",
+  "name": "TARDIS Mod",
+  "description": "A mod that implements the TARDIS.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Codewolf/Padthewolf"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
