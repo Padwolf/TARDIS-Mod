@@ -9,7 +9,9 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 import scala.swing.TextComponent;
 
 public class EntityTARDIS extends EntityLiving{
@@ -17,13 +19,18 @@ public class EntityTARDIS extends EntityLiving{
 	private EntityPlayer owner;
 	private EntityPlayer rider;
 	private boolean isFlying = false;
-	private double mSpeed = 5;
+	private double mSpeed = 3, mRotSpeed = 1;
+	private int dimension;
 	
 	double ramp = 0;
 	
 	public EntityTARDIS(World worldIn) {
 		super(worldIn);
 		setSize(1, 2);
+		
+		
+		DimensionManager.registerDimension(dimension = DimensionManager.getNextFreeDimId(), DimensionType.OVERWORLD);
+		
 		
 	}
 	
@@ -72,6 +79,13 @@ public class EntityTARDIS extends EntityLiving{
 	}
 	
 	@Override
+	public void onCollideWithPlayer(EntityPlayer entityIn) {
+		if (!entityIn.isSneaking()) {
+			entityIn.changeDimension(dimension);
+		}
+	}
+	
+	@Override
 	public boolean hasNoGravity() {
 		return isFlying;
 	}
@@ -83,10 +97,7 @@ public class EntityTARDIS extends EntityLiving{
 		if (rider != null) {
 			if (rider.isSneaking()) {
 				rider.setInvisible(false);
-				rider.dismountEntity(this);
-				if (getRidingEntity() != null) {
-					dismountRidingEntity();					
-				}
+				dismountRidingEntity();
 				rider = null;
 				isFlying = false;
 			}
@@ -94,19 +105,21 @@ public class EntityTARDIS extends EntityLiving{
 //			System.out.println("X: " + rider.getLookVec().xCoord);
 			
 			if (rider.moveForward > 0.0005) {
-				ramp += 0.001;
+				ramp += 0.004;
 				if (ramp > 1) ramp = 1;
 			} else if (rider.moveForward < -0.0005) {
-				ramp -= 0.001;
+				ramp -= 0.004;
 				if (ramp < -1) ramp = -1;
 			} else {
-				if (ramp > 0.001) ramp -= 0.001;
-				else if (ramp < -0.001) ramp += 0.001;
+				if (ramp > 0.004) ramp -= 0.004;
+				else if (ramp < -0.004) ramp += 0.004;
 				else ramp = 0;
 			}
 			
 			setVelocity(rider.getLookVec().xCoord * ramp * mSpeed, rider.getLookVec().yCoord * ramp * mSpeed,
 					rider.getLookVec().zCoord * ramp * mSpeed);
+			
+			setRotation((float) (rotationYaw + (ramp * mRotSpeed)), rotationPitch);
 			
 //			System.out.println("Y: " + rider.getLookVec().yCoord);
 //			System.out.println("Z: " + rider.getLookVec().zCoord);
