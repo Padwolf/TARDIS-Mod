@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class ProxyCommon {
+
 	public void preInit(FMLPreInitializationEvent e) {
 
     }
