@@ -22,7 +22,10 @@ public class RenderTARDIS extends RenderLiving<EntityTARDIS>{
 		// TODO Auto-generated method stub
 		return new ResourceLocation("tardis:textures/entity/tardis.png");
 	}
-    
-    
-    
+	
+	@Override
+	public void doRender(EntityTARDIS entity, double x, double y, double z, float entityYaw, float partialTicks) {
+		bindTexture(new ResourceLocation("tardis:textures/entity/tardis.png"));
+		super.doRender(entity, x, y, z, entityYaw, partialTicks);
+	}
 }

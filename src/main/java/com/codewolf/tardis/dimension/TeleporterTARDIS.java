@@ -11,5 +11,4 @@ public class TeleporterTARDIS extends Teleporter{
 		super(worldIn);
 		// TODO Auto-generated constructor stub
 	}
-
 }

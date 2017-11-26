@@ -29,7 +29,7 @@ public class EntityTARDIS extends EntityLiving{
 		setSize(1, 2);
 		
 		
-		DimensionManager.registerDimension(dimension = DimensionManager.getNextFreeDimId(), DimensionType.OVERWORLD);
+		//DimensionManager.registerDimension(dimension = DimensionManager.getNextFreeDimId(), DimensionType.OVERWORLD);
 		
 		
 	}
@@ -78,12 +78,12 @@ public class EntityTARDIS extends EntityLiving{
 		return super.applyPlayerInteraction(player, vec, stack, hand);
 	}
 	
-	@Override
-	public void onCollideWithPlayer(EntityPlayer entityIn) {
-		if (!entityIn.isSneaking()) {
-			entityIn.changeDimension(dimension);
-		}
-	}
+//	@Override
+//	public void onCollideWithPlayer(EntityPlayer entityIn) {
+//		if (!entityIn.isSneaking()) {
+//			entityIn.changeDimension(dimension);
+//		}
+//	}
 	
 	@Override
 	public boolean hasNoGravity() {
@@ -100,9 +100,8 @@ public class EntityTARDIS extends EntityLiving{
 				dismountRidingEntity();
 				rider = null;
 				isFlying = false;
+				return;
 			}
-			
-//			System.out.println("X: " + rider.getLookVec().xCoord);
 			
 			if (rider.moveForward > 0.0005) {
 				ramp += 0.004;
