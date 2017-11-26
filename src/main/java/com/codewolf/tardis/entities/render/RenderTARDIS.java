@@ -2,30 +2,33 @@ package com.codewolf.tardis.entities.render;
 
 import com.codewolf.tardis.TardisMod;
 import com.codewolf.tardis.entities.EntityTARDIS;
-
-import net.minecraft.client.model.ModelBase;
+import com.codewolf.tardis.entities.models.ModelTARDIS;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class RenderTARDIS extends RenderLiving<EntityTARDIS>{
-	protected ResourceLocation TardisTex;
 
-    public RenderTARDIS(RenderManager rendermanagerIn, ModelBase modelbaseIn, float shadowsizeIn)
+	public static Factory FACTORY = new Factory();
+	private static final ResourceLocation TARDIS_TEXTURE = new ResourceLocation(TardisMod.MODID, "textures/entity/tardis.png");
+
+    public RenderTARDIS(RenderManager rendermanagerIn)
     {
-        super(rendermanagerIn, modelbaseIn, shadowsizeIn);       
+        super(rendermanagerIn, new ModelTARDIS(), 0.5F);
     }
 
 	@Override
 	protected ResourceLocation getEntityTexture(EntityTARDIS entity) {
-		// TODO Auto-generated method stub
-		return new ResourceLocation("tardis:textures/entity/tardis.png");
+		return TARDIS_TEXTURE;
 	}
 	
-	@Override
-	public void doRender(EntityTARDIS entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		bindTexture(new ResourceLocation("tardis:textures/entity/tardis.png"));
-		super.doRender(entity, x, y, z, entityYaw, partialTicks);
+	private static class Factory implements IRenderFactory<EntityTARDIS> {
+
+		@Override
+		public Render<? super EntityTARDIS> createRenderFor(RenderManager manager) {
+			return new RenderTARDIS(manager);
+		}
 	}
 }
